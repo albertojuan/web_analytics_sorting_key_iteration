@@ -1,0 +1,21 @@
+DESCRIPTION >
+	Materialized to move RT data from legacy to new auxiliar analytics_events datasource
+
+NODE materialize_on_new_analytics
+DESCRIPTION >
+    Parse raw page_hit events
+
+SQL >
+
+    SELECT
+      timestamp,
+      action,
+      version,
+      session_id,
+      payload
+    FROM
+      analytics_events
+    WHERE timestamp > '2023-10-26 08:05:00'
+
+TYPE materialized
+DATASOURCE analytics_events_aux
