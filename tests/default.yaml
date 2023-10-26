@@ -10,3 +10,12 @@
     sql: |
       SELECT * FROM kpis
       WHERE visits > 0 AND pageviews = 0
+- no-difference-between-analytics-and-analytics-aux:
+    max_bytes_read: null
+    max_time: null
+    sql: |
+      WITH new AS (SELECT count(*) AS cnt FROM analytics_events),
+          old AS (SELECT count(*) AS cnt FROM analytics_events_aux)
+      SELECT old.cnt - new.cnt AS diff
+      FROM old, new
+      WHERE diff != 0
